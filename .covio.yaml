@@ -1,0 +1,6 @@
+endpoint: http://localhost:8000/api/v1/tasks/
+service:
+  name: dummy
+violations:
+  dummy: pep8 .
+project: 'nvbn/vkvideo'
