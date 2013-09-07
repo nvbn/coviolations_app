@@ -2,5 +2,5 @@ endpoint: http://localhost:8000/api/v1/tasks/
 service:
   name: dummy
 violations:
-  dummy: pep8 .
+  pep8: pep8 coviolations_app
 project: 'nvbn/vkvideo'
