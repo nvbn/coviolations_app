@@ -13,7 +13,7 @@ def _read_violation(command):
 
 
 def main():
-    config = yaml.load(open('.covio.yaml'))
+    config = yaml.load(open('.covio.yml'))
     repo = Repo('.')
     hash, branch = repo.head.commit.name_rev.split(' ')
     request = {
