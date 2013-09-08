@@ -18,7 +18,7 @@ def main():
     hash, branch = repo.head.commit.name_rev.split(' ')
     request = {
         'project': config['project'],
-        'service': config['service'],
+        'service': config.get('service', {'name': 'dummy'}),
         'violations': [
             {
                 'name': name,
@@ -33,7 +33,9 @@ def main():
         }
     }
     requests.post(
-        config['endpoint'], data=json.dumps(request),
+        config.get(
+            'endpoint', 'http://coviolations.io/api/v1/tasks/',
+        ), data=json.dumps(request),
         headers={
             'Content-type': 'application/json',
             'Accept': 'text/plain',
