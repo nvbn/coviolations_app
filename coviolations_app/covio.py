@@ -1,8 +1,9 @@
 import subprocess
 import json
+import os
+from sh import git
 import yaml
 import requests
-from git import Repo
 
 
 def _read_violation(command):
@@ -12,10 +13,12 @@ def _read_violation(command):
     return proc.stdout.read()
 
 
+def gitlog(format):
+    return str(git('--no-pager', 'log', "-1", pretty="format:%s" % format))
+
+
 def main():
     config = yaml.load(open('.covio.yml'))
-    repo = Repo('.')
-    hash, branch = repo.head.commit.name_rev.split(' ')
     request = {
         'project': config['project'],
         'service': config.get('service', {'name': 'dummy'}),
@@ -26,10 +29,12 @@ def main():
             } for name, command in config['violations'].items()
         ],
         'commit': {
-            'hash': hash,
-            'branch': branch,
-            'author': repo.head.commit.author.name,
-            'summary': repo.head.commit.summary,
+            'hash': gitlog('%H'),
+            'branch': os.environ.get(
+                'TRAVIS_BRANCH',
+                git('rev-parse', '--abbrev-ref', 'HEAD').strip()),
+            'author': gitlog('%aN'),
+            'summary': gitlog('%s'),
         }
     }
     requests.post(

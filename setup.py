@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'pyyaml',
         'requests',
-        'gitpython',
+        'sh',
     ],
     entry_points={
         'console_scripts': [
