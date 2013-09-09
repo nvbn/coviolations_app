@@ -17,6 +17,7 @@ create `.covio.yml` file.
    covio_yml
    using_local
    travis_ci
+   violations
 
 
 

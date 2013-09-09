@@ -10,6 +10,3 @@ Example for django project:
     violations:
       pep8: pep8 . --exclude='*migrations*'
       sloccount: sloccount .
-    project: 'nvbn/coviolations_web'
-
-Currently available `pep8` and `sloccount` violations.
