@@ -20,7 +20,10 @@ def gitlog(format):
 def main():
     config = yaml.load(open('.covio.yml'))
     request = {
-        'project': config['project'],
+        'project': config.get(
+            'project',
+            list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4],
+        ),
         'service': config.get('service', {'name': 'dummy'}),
         'violations': [
             {
