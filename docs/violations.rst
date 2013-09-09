@@ -76,3 +76,24 @@ The Python unit testing framework, sometimes referred to as “PyUnit,” is a P
       - ./manage.py test 2>test_out
     after_success:
       - covio
+
+pip-review
+==========
+
+Keeps your Python package dependencies pinned, but fresh.
+
+`.covio.yml`:
+
+.. code-block:: yaml
+
+    violations:
+      pip_review: pip-review
+
+`.travis.yml`:
+
+.. code-block:: yaml
+
+    before_install:
+      - pip install pip-tools
+    after_success:
+      - covio
