@@ -19,11 +19,14 @@ def gitlog(format):
 
 def main():
     config = yaml.load(open('.covio.yml'))
+
+    maybe_project = list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4]
+
+    if maybe_project.find('/') == 0:
+        maybe_project = '/'.join(maybe_project.split('/')[3:])
+
     request = {
-        'project': config.get(
-            'project',
-            list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4],
-        ),
+        'project': config.get('project', maybe_project),
         'service': config.get('service', {'name': 'dummy'}),
         'violations': [
             {
