@@ -1,14 +1,17 @@
 from setuptools import setup, find_packages
-import sys, os
 
-version = '0.2'
+
+version = '0.3'
 
 setup(
     name='coviolations_app',
     version=version,
     description="coviolations.io app",
     long_description=open('README.rst').read(),
-    classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+    classifiers=[
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+    ],
     keywords='',
     author='Vladimir Iakovlev',
     author_email='nvbn.rm@gmail.com',
