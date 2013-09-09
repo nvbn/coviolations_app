@@ -97,3 +97,24 @@ Keeps your Python package dependencies pinned, but fresh.
       - pip install pip-tools
     after_success:
       - covio
+
+testem
+======
+
+Unit testing in Javascript can be tedious and painful, but Testem makes it so easy that you will actually want to write tests.
+
+`.covio.yml`:
+
+.. code-block:: yaml
+
+    violations:
+      testem: cat testem_out
+
+`.travis.yml`:
+
+.. code-block:: yaml
+
+    script:
+      - testem ci > testem_out
+    after_success:
+      - covio
