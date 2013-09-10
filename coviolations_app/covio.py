@@ -17,6 +17,22 @@ def gitlog(format):
     return str(git('--no-pager', 'log', "-1", pretty="format:%s" % format))
 
 
+def get_service(config):
+    """Get service"""
+    if config.get('service'):
+        return config['service']
+
+    if os.environ.get('TRAVIS'):
+        return {
+            'name': 'travis_ci',
+            'job_id': os.environ.get('TRAVIS_JOB_ID'),
+        }
+
+    return {
+        'name': 'dummy',
+    }
+
+
 def main():
     config = yaml.load(open('.covio.yml'))
 
@@ -27,7 +43,7 @@ def main():
 
     request = {
         'project': config.get('project', maybe_project),
-        'service': config.get('service', {'name': 'dummy'}),
+        'service': get_service(config),
         'violations': [
             {
                 'name': name,
