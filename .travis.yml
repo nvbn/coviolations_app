@@ -4,6 +4,7 @@ python:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq sloccount
+  - pip install pep8
 install:
   - pip install -U .
 script:
