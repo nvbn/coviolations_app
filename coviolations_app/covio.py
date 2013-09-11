@@ -59,7 +59,7 @@ def main():
             'summary': gitlog('%s'),
         }
     }
-    requests.post(
+    print requests.post(
         config.get(
             'endpoint', 'http://coviolations.io/api/v1/tasks/',
         ), data=json.dumps(request),
@@ -67,4 +67,4 @@ def main():
             'Content-type': 'application/json',
             'Accept': 'text/plain',
         },
-    )
+    ).text
