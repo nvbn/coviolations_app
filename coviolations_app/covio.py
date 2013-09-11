@@ -26,6 +26,7 @@ def get_service(config):
         return {
             'name': 'travis_ci',
             'job_id': os.environ.get('TRAVIS_JOB_ID'),
+            'pull_request_id': os.environ.get('TRAVIS_PULL_REQUEST'),
         }
 
     if os.environ.get('COVIO_TOKEN'):
