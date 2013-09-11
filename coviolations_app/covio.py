@@ -28,6 +28,12 @@ def get_service(config):
             'job_id': os.environ.get('TRAVIS_JOB_ID'),
         }
 
+    if os.environ.get('COVIO_TOKEN'):
+        return {
+            'name': 'token',
+            'token': os.environ.get('COVIO_TOKEN'),
+        }
+
     return {
         'name': 'dummy',
     }
