@@ -14,7 +14,7 @@ Check your Python code against some of the style conventions in PEP 8.
     violations:
       pep8: pep8 . --exclude='*migrations*'
 
-`.travis.yml`:
+For travis-ci in `.travis.yml`:
 
 .. code-block:: yaml
 
@@ -22,6 +22,13 @@ Check your Python code against some of the style conventions in PEP 8.
       - pip install pep8
     after_success:
       - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    pip install pep8
+    COVIO_TOKEN="token" covio
 
 sloccount
 =========
@@ -35,7 +42,7 @@ Count source lines of code (SLOC).
     violations:
       sloccount: sloccount .
 
-`.travis.yml`:
+For travis-ci in `.travis.yml`:
 
 .. code-block:: yaml
 
@@ -44,6 +51,14 @@ Count source lines of code (SLOC).
       - sudo apt-get install -qq sloccount
     after_success:
       - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    sudo apt-get update -qq
+    sudo apt-get install -qq sloccount
+    COVIO_TOKEN="token" covio
 
 Python unittests
 ================
@@ -57,7 +72,7 @@ The Python unit testing framework, sometimes referred to as “PyUnit,” is a P
     violations:
       py_unittest: cat test_out
 
-`.travis.yml` with nose:
+For travis-ci in `.travis.yml` with nose:
 
 .. code-block:: yaml
 
@@ -68,7 +83,7 @@ The Python unit testing framework, sometimes referred to as “PyUnit,” is a P
     after_success:
       - covio
 
-`.travis.yml` with django:
+For travis-ci in `.travis.yml` with django:
 
 .. code-block:: yaml
 
@@ -76,6 +91,20 @@ The Python unit testing framework, sometimes referred to as “PyUnit,” is a P
       - ./manage.py test 2>test_out
     after_success:
       - covio
+
+For drone.io and jenkins in project script with nose:
+
+.. code-block:: bash
+
+    pip install nose 2>test_out
+    COVIO_TOKEN="token" covio
+
+For drone.io and jenkins in project script with django:
+
+.. code-block:: bash
+
+    ./manage.py test 2>test_out
+    COVIO_TOKEN="token" covio
 
 pip-review
 ==========
@@ -89,7 +118,7 @@ Keeps your Python package dependencies pinned, but fresh.
     violations:
       pip_review: pip-review
 
-`.travis.yml`:
+For travis-ci in `.travis.yml`:
 
 .. code-block:: yaml
 
@@ -97,6 +126,13 @@ Keeps your Python package dependencies pinned, but fresh.
       - pip install pip-tools
     after_success:
       - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    pip install pep-tools
+    COVIO_TOKEN="token" covio
 
 testem
 ======
@@ -110,7 +146,7 @@ Unit testing in Javascript can be tedious and painful, but Testem makes it so ea
     violations:
       testem: cat testem_out
 
-`.travis.yml`:
+For travis-ci in `.travis.yml`:
 
 .. code-block:: yaml
 
@@ -118,3 +154,11 @@ Unit testing in Javascript can be tedious and painful, but Testem makes it so ea
       - testem ci > testem_out
     after_success:
       - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    testem ci > testem_out
+    COVIO_TOKEN="token" covio
+

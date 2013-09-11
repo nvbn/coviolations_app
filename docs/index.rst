@@ -6,7 +6,8 @@
 coviolations.io - violations for ci
 ===================================
 
-`coviolations.io <http://coviolations.io>`_ - tool for collecting and visualasing code violations.
+`coviolations.io <http://coviolations.io>`_ - tool for collecting and visualisation code violations
+works with travis-ci, drone.io and jenkins.
 
 For using it with your projects you need to enable project on `coviolations.io <http://coviolations.io>`_ and
 create `.covio.yml` file.
@@ -15,8 +16,9 @@ create `.covio.yml` file.
    :maxdepth: 2
 
    covio_yml
-   using_local
    travis_ci
+   drone_io
+   jenkins
    violations
 
 
