@@ -162,3 +162,31 @@ For drone.io and jenkins in project script:
     testem ci > testem_out
     COVIO_TOKEN="token" covio
 
+coverage
+==========
+
+Measure, collect, and report on code coverage in Python programs.
+
+`.covio.yml`:
+
+.. code-block:: yaml
+
+    violations:
+      coverage: coverage report
+
+For travis-ci in `.travis.yml`:
+
+.. code-block:: yaml
+
+    before_install:
+      - pip install coverage
+    after_success:
+      - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    pip install coverage
+    COVIO_TOKEN="token" covio
+

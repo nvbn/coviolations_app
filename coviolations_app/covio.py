@@ -68,7 +68,7 @@ def main():
     }
     response = requests.post(
         config.get(
-            'endpoint', 'http://coviolations.io/api/v1/tasks/',
+            'endpoint', 'http://coviolations.io/api/v1/tasks/raw/',
         ), data=json.dumps(request),
         headers={
             'Content-type': 'application/json',
