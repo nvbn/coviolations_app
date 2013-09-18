@@ -1,3 +1,4 @@
+endpoint: http://localhost:8000/api/v1/tasks/raw/
 violations:
   pep8: pep8 coviolations_app
   sloccount: sloccount coviolations_app
