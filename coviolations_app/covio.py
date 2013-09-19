@@ -40,6 +40,18 @@ def get_service(config):
     }
 
 
+def get_branch():
+    """Get branch"""
+    attempts = [
+        os.environ.get('TRAVIS_BRANCH'),
+        os.environ.get('GIT_BRANCH'),
+        git('rev-parse', '--abbrev-ref', 'HEAD').strip(),
+    ]
+    for attempt in attempts:
+        if attempt:
+            return attempt
+
+
 def main():
     config = yaml.load(open('.covio.yml'))
 
@@ -59,9 +71,7 @@ def main():
         ],
         'commit': {
             'hash': gitlog('%H'),
-            'branch': os.environ.get(
-                'TRAVIS_BRANCH',
-                git('rev-parse', '--abbrev-ref', 'HEAD').strip()),
+            'branch': get_branch(),
             'author': gitlog('%aN'),
             'summary': gitlog('%s'),
         }
