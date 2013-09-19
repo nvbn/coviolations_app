@@ -9,8 +9,7 @@ import requests
 def _read_violation(command):
     """Read violation"""
     proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    proc.wait()
-    return proc.stdout.read()
+    return proc.communicate()[0]
 
 
 def gitlog(format):
