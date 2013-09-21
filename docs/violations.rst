@@ -190,3 +190,30 @@ For drone.io and jenkins in project script:
     pip install coverage
     COVIO_TOKEN="token" covio
 
+jslint
+=======
+
+The JavaScript Verifier takes a JavaScript source and scans it.
+
+`.covio.yml`:
+
+.. code-block:: yaml
+
+    violations:
+      jslint: jslint *.js
+
+For travis-ci in `.travis.yml`:
+
+.. code-block:: yaml
+
+    before_install:
+      - npm install jslint
+    after_success:
+      - covio
+
+For drone.io and jenkins in project script:
+
+.. code-block:: bash
+
+    npm install jslint
+    COVIO_TOKEN="token" covio
