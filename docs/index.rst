@@ -20,6 +20,7 @@ create `.covio.yml` file.
    drone_io
    jenkins
    violations
+   examples
 
 
 
