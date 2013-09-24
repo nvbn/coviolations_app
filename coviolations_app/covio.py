@@ -51,6 +51,20 @@ def get_branch():
             return attempt
 
 
+def _create_violation_dict(args):
+    """Create violation dict"""
+    name, data = args
+    result = {
+        'name': name,
+    }
+    if type(data) is dict:
+        result['raw'] = _read_violation(data.pop('command'))
+        result.update(data)
+    else:
+        result['raw'] = _read_violation(data)
+    return result
+
+
 def main():
     config = yaml.load(open('.covio.yml'))
 
@@ -62,12 +76,10 @@ def main():
     request = {
         'project': config.get('project', maybe_project),
         'service': get_service(config),
-        'violations': [
-            {
-                'name': name,
-                'raw': _read_violation(command),
-            } for name, command in config['violations'].items()
-        ],
+        'violations': map(
+            _create_violation_dict,
+            config['violations'].items(),
+        ),
         'commit': {
             'hash': gitlog('%H'),
             'branch': get_branch(),
