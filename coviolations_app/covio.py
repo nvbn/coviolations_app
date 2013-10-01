@@ -51,12 +51,12 @@ def get_branch():
     """Get branch"""
     attempts = [
         os.environ.get('TRAVIS_BRANCH'),
-        os.environ.get('GIT_BRANCH'),
+        os.environ.get('GIT_BRANCH', ''),
         git('rev-parse', '--abbrev-ref', 'HEAD').strip(),
     ]
     for attempt in attempts:
         if attempt:
-            return attempt
+            return re.sub(r'^origin/', '', attempt)
 
 
 def _create_violation_dict(args):
