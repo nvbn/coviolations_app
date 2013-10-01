@@ -4,6 +4,7 @@ import os
 from sh import git
 import yaml
 import requests
+import re
 
 
 STDOUT = 0
@@ -81,7 +82,11 @@ def main():
 
     maybe_project = list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4]
 
-    if maybe_project.find('/') == 0:
+    if maybe_project == '//':
+        maybe_project = '/'.join(re.match(
+            r'.*[/:](.*)/(.*).git \(.*\)', list(git.remote('-v'))[0]
+        ).groups())
+    elif maybe_project.find('/') == 0:
         maybe_project = '/'.join(maybe_project.split('/')[3:])
 
     request = {
