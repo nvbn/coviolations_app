@@ -6,10 +6,17 @@ import yaml
 import requests
 
 
-def _read_violation(command):
+STDOUT = 0
+STDERR = 1
+
+
+def _read_violation(command, source=STDOUT):
     """Read violation"""
-    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    return proc.communicate()[0]
+    proc = subprocess.Popen(
+        command, shell=True, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return proc.communicate()[source]
 
 
 def gitlog(format):
@@ -58,7 +65,11 @@ def _create_violation_dict(args):
         'name': name,
     }
     if type(data) is dict:
-        result['raw'] = _read_violation(data.pop('command'))
+        if 'stderr' in data:
+            source = STDERR if data.pop('stderr') else STDOUT
+        else:
+            source = STDOUT
+        result['raw'] = _read_violation(data.pop('command'), source)
         result.update(data)
     else:
         result['raw'] = _read_violation(data)
