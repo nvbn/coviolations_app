@@ -59,9 +59,8 @@ def get_branch():
             return re.sub(r'^origin/', '', attempt)
 
 
-def _create_violation_dict(args):
+def _create_violation_dict(name, data):
     """Create violation dict"""
-    name, data = args
     result = {
         'name': name,
     }
@@ -74,6 +73,7 @@ def _create_violation_dict(args):
         result.update(data)
     else:
         result['raw'] = _read_violation(data)
+    result['raw'] = result['raw'].decode()
     return result
 
 
@@ -92,10 +92,10 @@ def main():
     request = {
         'project': config.get('project', maybe_project),
         'service': get_service(config),
-        'violations': map(
-            _create_violation_dict,
-            config['violations'].items(),
-        ),
+        'violations': [
+            _create_violation_dict(name, data)
+            for name, data in config['violations'].items()
+        ],
         'commit': {
             'hash': gitlog('%H'),
             'branch': get_branch(),
