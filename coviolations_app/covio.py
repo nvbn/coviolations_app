@@ -5,6 +5,7 @@ from sh import git
 import yaml
 import requests
 import re
+import sys
 
 
 STDOUT = 0
@@ -73,7 +74,8 @@ def _create_violation_dict(name, data):
         result.update(data)
     else:
         result['raw'] = _read_violation(data)
-    result['raw'] = result['raw'].decode()
+    if sys.version_info.major == 3:
+        result['raw'] = result['raw'].decode()
     return result
 
 
