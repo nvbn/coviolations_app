@@ -217,3 +217,6 @@ For drone.io and jenkins in project script:
 
     npm install jslint
     COVIO_TOKEN="token" covio
+
+xunit
+======
