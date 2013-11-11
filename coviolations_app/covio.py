@@ -1,15 +1,19 @@
 import subprocess
 import json
 import os
-from sh import git
 import yaml
-import requests
 import re
 import sys
+import time
+from sh import git
+import requests
 
 
 STDOUT = 0
 STDERR = 1
+
+STATUS_SUCCESS = 1
+STATUS_FAILED = 2
 
 
 def _read_violation(command, source=STDOUT):
@@ -79,6 +83,23 @@ def _create_violation_dict(name, data):
     return result
 
 
+def check_status(response):
+    """Check status of response"""
+    if not 'wait' in sys.argv[1:]:
+        return True
+
+    uri = response.json()['resource_uri']
+    while True:
+        status_response = requests.get(uri)
+        status = status_response.json()['status']
+        if status == STATUS_SUCCESS:
+            return True
+        elif status == STATUS_FAILED:
+            return False
+        else:
+            time.sleep(1)
+
+
 def main():
     config = yaml.load(open('.covio.yml'))
 
@@ -114,6 +135,10 @@ def main():
             'Accept': 'text/plain',
         },
     )
-    print('Violations sent::{}::{}'.format(
-        response.status_code, response.text,
-    ))
+
+    if check_status(response):
+        print('Violations sent::{}::{}'.format(
+            response.status_code, response.text,
+        ))
+    else:
+        sys.exit(1)
