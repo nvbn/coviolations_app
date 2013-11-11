@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-version = '0.18'
+version = '0.19'
 
 setup(
     name='coviolations_app',
