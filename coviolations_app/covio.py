@@ -110,9 +110,17 @@ def _prepare_environment():
         os.chdir(repo.name)
 
 
+def _prepare_project(config):
+    """Prepare project"""
+    if 'prepare' in config:
+        for cmd in config['prepare']:
+            subprocess.call(cmd, shell=True)
+
+
 def main():
     _prepare_environment()
     config = yaml.load(open('.covio.yml'))
+    _prepare_project(config)
 
     maybe_project = list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4]
 
