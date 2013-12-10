@@ -101,15 +101,6 @@ def check_status(response):
             time.sleep(1)
 
 
-def _prepare_environment():
-    """Prepare environment"""
-    if os.environ.get('RUN_ON_COVIO_SIDE'):
-        github = Github(os.environ['GITHUB_TOKEN'])
-        repo = github.get_repo(os.environ['REPO_NAME'])
-        subprocess.call(['git', 'clone', repo.ssh_url])
-        os.chdir(repo.name)
-
-
 def _prepare_project(config):
     """Prepare project"""
     if 'prepare' in config:
@@ -133,7 +124,6 @@ def _iterate_violations(config):
 
 
 def main():
-    _prepare_environment()
     config = yaml.load(open('.covio.yml'))
     _prepare_project(config)
 
