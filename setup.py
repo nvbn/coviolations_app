@@ -24,6 +24,7 @@ setup(
         'pyyaml',
         'requests',
         'sh',
+        'PyGithub',
     ],
     entry_points={
         'console_scripts': [

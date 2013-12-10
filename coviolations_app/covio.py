@@ -7,6 +7,7 @@ import sys
 import time
 from sh import git
 import requests
+from github import Github
 
 
 STDOUT = 0
@@ -100,7 +101,17 @@ def check_status(response):
             time.sleep(1)
 
 
+def _prepare_environment():
+    """Prepare environment"""
+    if os.environ.get('RUN_ON_COVIO_SIDE'):
+        github = Github(os.environ['GITHUB_TOKEN'])
+        repo = github.get_repo(os.environ['REPO_NAME'])
+        subprocess.call(['git', 'clone', repo.ssh_url])
+        os.chdir(repo.name)
+
+
 def main():
+    _prepare_environment()
     config = yaml.load(open('.covio.yml'))
 
     maybe_project = list(git.remote('-v'))[0].split(':')[1].split(' ')[0][:-4]
