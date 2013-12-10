@@ -117,6 +117,21 @@ def _prepare_project(config):
             subprocess.call(cmd, shell=True)
 
 
+def _iterate_violations(config):
+    """Iterate violations"""
+    processed = []
+    items = config['violations'].items()
+    while len(items):
+        name, data = items.pop(0)
+        if type(data) is dict:
+            wait = data.get('wait')
+            if wait and wait not in processed:
+                items.append((name, data))
+                continue
+        processed.append(name)
+        yield name, data
+
+
 def main():
     _prepare_environment()
     config = yaml.load(open('.covio.yml'))
@@ -136,7 +151,7 @@ def main():
         'service': get_service(config),
         'violations': [
             _create_violation_dict(name, data)
-            for name, data in config['violations'].items()
+            for name, data in _iterate_violations(config)
         ],
         'commit': {
             'hash': gitlog('%H'),
