@@ -35,6 +35,13 @@ def get_service(config):
     if config.get('service'):
         return config['service']
 
+    if os.environ.get('RUN_ON_COVIO_SIDE'):
+        return {
+            'name': 'coviolations',
+            'task_id': os.environ['NODE_TASK'],
+            'token': os.environ['COVIO_TOKEN'],
+        }
+
     if os.environ.get('TRAVIS'):
         return {
             'name': 'travis_ci',
