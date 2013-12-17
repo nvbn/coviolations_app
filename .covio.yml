@@ -1,3 +1,9 @@
+image: python
+prepare:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq sloccount
+  - pip install pep8
+  - pip install -U .
 violations:
   pep8: pep8 coviolations_app
   sloccount: sloccount coviolations_app
